@@ -1,0 +1,8 @@
+.songs/
+.papers/
+.ipynb_checkpoints/
+.__pycache__/
+bugs.txt
+desing.txt
+output_mix.mp3
+test.py
