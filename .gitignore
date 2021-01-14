@@ -1,8 +1,15 @@
-.songs/
-.papers/
+# All folders
+songs/
+not_mine/
+papers/
 .ipynb_checkpoints/
-.__pycache__/
+__pycache__
+notebooks
+.DS_Store
+
+# all files
 bugs.txt
-desing.txt
+design.txt
 output_mix.mp3
 test.py
+function_tools.py

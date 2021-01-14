@@ -18,7 +18,7 @@ class Mixer:
     def __init__(self, song_list, desired_samp_freq = 44100):
         self.songs = self.make_all_same(song_list, desired_samp_freq)
         self.sample_frequency = desired_samp_freq
-        self.bpm = 128
+        self.bpm = 125
         self.samples_per_beat = self.sample_frequency / (self.bpm/60)  # samples per second divided by beats per second
         self.samples_per_bar = self.samples_per_beat * 4  # Assuming 4/4 timing
 
@@ -50,11 +50,11 @@ class Mixer:
     Returns an array of mixing types dictating how to mix song n with n+1
     """
     def how_to_mix(self):
-        return ["low_cut" for i in range(len(self.songs) - 1)] # default right now to just using 'fade' type
+        return ["sin_fade" for i in range(len(self.songs) - 1)] # default right now to just using 'fade' type
 
 
     """
-    # TODO fix this so that songs are mixed based on a point where both signals are at 0!
+    # TODO fix this so that songs are mixed so that "energy" is compatible
     Looks at the BPM of both songs and decides on a suitable place to mix the two songs
     """
     def get_mix_points(self):
@@ -148,6 +148,7 @@ class Mixer:
                 fade_factor = np.sin(np.pi/2 * (i / mid))
                 current_mix[start_from + i] = current_mix[start_from + i] + fade_factor * next_song[i]
 
+            # TODO fix this so that it doesn't sound like the first song ends so abruptly
             for i in range(mid, mix_index):
                 # Fade the first song out according to a cos function
                 fade_factor = max(np.cos((5 * np.pi/12) * (i - mid)/(mid)), 0)  

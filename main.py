@@ -11,7 +11,7 @@ from Mixer import Mixer
 
 def read_wav_songs(dir_name):
     song_names = os.listdir(dir_name)
-    wav_songs = [wvf.read(dir_name + name) for name in song_names if name[-3:] == "wav"]
+    wav_songs = [[wvf.read(dir_name + name), name] for name in song_names if name[-3:] == "wav"]
     return wav_songs
 
 
@@ -42,14 +42,14 @@ def only_mp3_songs(song_names):
 if __name__ == "__main__":
     
     # mp3_to_wav all songs
-    # mp3_to_wav("./songs/128/")
+    mp3_to_wav("./songs/125/")
 
     # read in the MP3 Songs and convert them to wav
-    wav_songs = read_wav_songs("./songs/128_test/")
+    wav_songs = read_wav_songs("./songs/125/")
     # print(wav_songs[0])
 
     # create song objects
-    songs = [Song(wav_song) for wav_song in wav_songs]
+    songs = [Song(wav_song[0], wav_song[1]) for wav_song in wav_songs]
 
     # mix song objects together to create a new song object. I KNOW THIS WORKS!!!
     # mix = mix_songs(songs[0], songs[1])
@@ -58,9 +58,9 @@ if __name__ == "__main__":
 
     # print(mixer.sample_frequency, mixer.mix[100000:100200])
     # output mix to file
-    dst = "./songs/mixes/output_mix_128.wav"
+    dst = "./songs/mixes/output_mix_125.wav"
     wvf.write(dst, mixer.sample_frequency, mixer.mix)
 
     # convert wav to mp3
-    wav_to_mp3(dst, "./songs/mixes/output_mix_128.mp3")
+    wav_to_mp3(dst, "./songs/mixes/output_mix_125.mp3")
 
